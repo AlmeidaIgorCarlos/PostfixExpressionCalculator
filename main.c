@@ -2,78 +2,77 @@
 #include <string.h>
 #include <ctype.h>
 
-//define
-
 int main(){
-	//Arrays
 	char infixa[50];
+	int infixaPonteiro = 0;
+	
 	char posfixa[50];
-	char pilha[50];
+	int posfixaPonteiro = 0;
+	
+	char operadores[50];
+	int operadoresPonteiro = 0;
 	
 	char dado;
-	
-	//i -> For
 	int i;
 	
-	//Ponteiro para indicar o topo da pilha
-	int pilhaPonteiro = 0;
-	
-	//Lendo a expressão infixa
 	printf("Digite a expressao infixa, por favor: \n");
 	fflush(stdin);
 	gets(infixa);
-	
-	
+
 	for(i = 0; i < 50; i++){
 		if(isdigit(infixa[i])){
-			posfixa[i] = infixa[i];
+			
+			//Posfixa armazena o dígito
+			posfixa[posfixaPonteiro] = infixa[i];
+			posfixaPonteiro++;
+			
 		}else{
-			//É * ou /
-			if(infixa[i] == '/' || infixa[i] == '*'){
-				for(pilhaPonteiro; pilhaPonteiro<=0; pilhaPonteiro--){
-					if(pilha[pilhaPonteiro] == '*' || pilha[pilhaPonteiro] == '/'){
-						posfixa[i] = pilha[pilhaPonteiro];
-						pilhaPonteiro--;
-					}
-					pilhaPonteiro++;
-					pilha[pilhaPonteiro] = infixa[i];
-				}
-				pilhaPonteiro++;
-				pilha[pilhaPonteiro] = posfixa[i];
-				}
-			else{
-				//Zerando pilha
-				for(pilhaPonteiro; pilhaPonteiro<=0; pilhaPonteiro--){
-					if(pilha[pilhaPonteiro] == '*' || pilha[pilhaPonteiro] == '/' || pilha[pilhaPonteiro] == '+' || pilha[pilhaPonteiro] == '-'){
-						for(i = 0; i <= 50; i++){
-							if(posfixa[i] == '\0'){
-								posfixa[1] = pilha[pilhaPonteiro];
-								pilhaPonteiro--;
-								break;
-							}
-						}
+			if(infixa[i] == '*' || infixa[i] == '/'){
+				while(operadoresPonteiro > 0){
+					//Desempilha operador
+					operadoresPonteiro--;
+					dado = operadores[operadoresPonteiro];
+					
+					if(dado != '+' && dado != '-'){
+						//Posfixa armazena o operador
+						posfixa[posfixaPonteiro] = dado;
+						posfixaPonteiro++;
+					}else{
+						//Empilha operador
+						operadores[operadoresPonteiro] = dado;
+						operadoresPonteiro++;
+						break;
 					}
 				}
-				pilhaPonteiro++;
-				pilha[pilhaPonteiro] = infixa[i];
+			}else{
+				while(operadoresPonteiro > 0){
+					
+					//Desempilha operador
+					operadoresPonteiro--;
+					dado = operadores[operadoresPonteiro];
+					
+					//Posfixa armazena o operador
+					posfixa[posfixaPonteiro] = dado;
+					posfixaPonteiro++;
+				}
 			}
+			
+			//Empilha caracter
+			operadores[operadoresPonteiro] = infixa[i];
+			operadoresPonteiro++;
 		}
 	}
 	
-	//Zerando pilha
-	for(pilhaPonteiro; pilhaPonteiro<=0; pilhaPonteiro--){
-		if(pilha[pilhaPonteiro] == '*' || pilha[pilhaPonteiro] == '/' || pilha[pilhaPonteiro] == '+' || pilha[pilhaPonteiro] == '-'){
-			for(i = 0; i <= 50; i++){
-				if(posfixa[i] == '\0'){
-					posfixa[1] = pilha[pilhaPonteiro];
-					pilhaPonteiro--;
-					break;
-				}
-			}
-		}
+	while(operadoresPonteiro > 0){
+		//Desempilha o operador
+		operadoresPonteiro--;
+		dado = operadores[operadoresPonteiro];
+		
+		//Posfixa armazena o operador
+		posfixa[posfixaPonteiro] = dado;
+		posfixaPonteiro++;
 	}
 	
-	printf("Expressao infixa: %s", puts(infixa));
-	printf("Expressao posfixa: %s", puts(posfixa));
-	printf("Pilha: %s", puts(pilha));
+	printf("\n\nInfixa: %s\n", infixa);
+	printf("Posfixa: %s\n\n", posfixa);
 }
