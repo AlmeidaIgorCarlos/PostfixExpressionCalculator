@@ -2,12 +2,12 @@
 #include <string.h>
 #include <ctype.h>
  
-#define N 50
+#define N 10
  
 int main(){
     char infixa[N];
     int infixaPonteiro = 0;
-     
+	 
     char posfixa[N];
     int posfixaPonteiro = 0;
      
@@ -21,7 +21,7 @@ int main(){
     fflush(stdin);
     gets(infixa);
  
-    for(i = 0; i < N; i++){
+    for(i = 0; i <= strlen(infixa); i++){
         if(isdigit(infixa[i])){
              
             //Posfixa armazena o dígito
