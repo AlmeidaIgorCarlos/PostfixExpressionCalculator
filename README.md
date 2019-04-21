@@ -1,4 +1,4 @@
-# PostfixExpressionCalculator
+# postfix-expression-calculator
 Software desenvolvido durante o 3º semestre do curso de Sistemas de Informação na matéria Códigos de Alta Performance
 
 Este software é o resultado de um trabalho acadêmico. O objetivo é implementar, de maneira manual, a estrutura de dados Pilha na linguagem C através de arrays.
